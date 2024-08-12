@@ -1,25 +1,23 @@
-document.getElementById('add-todo-btn').addEventListener('click', addTodo);
-
-function addTodo() {
-    const todoInput = document.getElementById('todo-input');
-    const todoText = todoInput.value.trim();
+document.getElementById('add-todo-btn').addEventListener('click', function() {
+    const input = document.getElementById('todo-input');
+    const todoText = input.value.trim();
 
     if (todoText !== '') {
-        const todoList = document.getElementById('todo-list');
-
-        const listItem = document.createElement('li');
-        listItem.className = 'todo-item';
-
-        listItem.innerHTML = `
-            <span>${todoText}</span>
-            <button class="remove-btn">Remove</button>
-        `;
-
-        listItem.querySelector('.remove-btn').addEventListener('click', function() {
-            todoList.removeChild(listItem);
-        });
-
-        todoList.appendChild(listItem);
-        todoInput.value = '';
+        addTodoItem(todoText);
+        input.value = '';
     }
+});
+
+function addTodoItem(text) {
+    const li = document.createElement('li');
+    li.textContent = text;
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.addEventListener('click', function() {
+        li.remove();
+    });
+
+    li.appendChild(deleteBtn);
+    document.getElementById('todo-list').appendChild(li);
 }
