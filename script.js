@@ -1,23 +1,34 @@
-document.getElementById('add-todo-btn').addEventListener('click', function() {
-    const input = document.getElementById('todo-input');
-    const todoText = input.value.trim();
+// Add event listener for the Add button
+document.getElementById('add-btn').addEventListener('click', addTask);
 
-    if (todoText !== '') {
-        addTodoItem(todoText);
-        input.value = '';
+// Function to add a new task
+function addTask() {
+    const taskInput = document.getElementById('todo-input');
+    const taskText = taskInput.value.trim();
+    
+    if (taskText === '') {
+        alert('Please enter a task!');
+        return;
     }
-});
 
-function addTodoItem(text) {
-    const li = document.createElement('li');
-    li.textContent = text;
+    const taskItem = document.createElement('li');
+    taskItem.className = 'todo-item';
+    taskItem.textContent = taskText;
 
     const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'delete-btn';
     deleteBtn.textContent = 'Delete';
-    deleteBtn.addEventListener('click', function() {
-        li.remove();
+    deleteBtn.onclick = function() {
+        taskItem.remove();
+    };
+
+    taskItem.appendChild(deleteBtn);
+
+    taskItem.addEventListener('click', function() {
+        taskItem.classList.toggle('done');
     });
 
-    li.appendChild(deleteBtn);
-    document.getElementById('todo-list').appendChild(li);
+    document.getElementById('todo-list').appendChild(taskItem);
+
+    taskInput.value = '';
 }
